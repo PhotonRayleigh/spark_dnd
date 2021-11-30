@@ -1,16 +1,11 @@
-# spark_dnd
+# D&D Character Sheet App
 
-A new Flutter project.
+This app is in it's very beginning stages. My goal is to make a personal character sheet app for playing D&D. I hope to grow it and add more features overtime, and maybe one day can release it as an actual product.
 
-## Getting Started
+Will update the readme as the project progresses.
 
-This project is a starting point for a Flutter application.
+## Copyright
 
-A few resources to get you started if this is your first Flutter project:
+Code in this repository belongs soley to PhotonRayleigh.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Third-party code, such as Flutter, belongs to its respective owners. See individual licenses for details.
