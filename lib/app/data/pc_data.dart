@@ -1,6 +1,12 @@
 // Core data class for characters
 
 class PCData {
+  set level(int level) => (level >= 0 && level <= 20)
+      ? _level = level
+      : throw "Levels must range from 0-20. Tried to assign level $level";
+  int get level => _level;
+  int _level = 1;
+
   set strScore(int v) => scoreCheck(v) ? _strScore = v : _strScore = _strScore;
   int get strScore => _strScore;
   int _strScore = 10;
@@ -63,4 +69,22 @@ class PCData {
     24: 7,
     25: 7,
   };
+
+  int get proficiency {
+    if (level == 0) {
+      return 0;
+    } else if (level >= 1 && level <= 4) {
+      return 2;
+    } else if (level >= 5 && level <= 8) {
+      return 3;
+    } else if (level >= 9 && level <= 12) {
+      return 4;
+    } else if (level >= 13 && level <= 16) {
+      return 5;
+    } else if (level >= 17 && level <= 20) {
+      return 6;
+    } else {
+      throw "Levels must range from 0-20. Level $level was provided.";
+    }
+  }
 }
