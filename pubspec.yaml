@@ -32,6 +32,10 @@ dependencies:
   spark_lib:
     path: ../spark_lib
   sqflite: ^2.0.2
+  flutter_simple_dependency_injection: ^2.0.0
+  rxdart: ^0.27.3
+  bloc: ^8.0.2
+  flutter_bloc: ^8.0.1
 
 
 
