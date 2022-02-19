@@ -8,42 +8,45 @@ import 'package:spark_lib/navigation/spark_nav.dart';
 import 'app/screens/dnd_home.dart';
 import 'app/theme/base_theme.dart';
 
-final Program program = Program();
+// final Program program = Program();
 
 class Program {
-  GlobalKey<AppSystemManagerState> appManagerKey =
-      GlobalKey(debugLabel: "System Manager");
+  Program(this.app, this.windowData);
 
-  AppSystemManagerState get appManager {
-    var state = appManagerKey.currentState;
-    if (state == null) throw "AppSystemManager has not been initialized.";
-    return state;
-  }
+  // GlobalKey<AppSystemManagerState> appManagerKey =
+  //     GlobalKey(debugLabel: "System Manager");
 
-  late SparkApp app = SparkApp(
-      home: home,
-      title: "D&D App",
-      sysManagerKey: appManagerKey,
-      theme: baseTheme);
+  // AppSystemManagerState get appManager {
+  //   var state = appManagerKey.currentState;
+  //   if (state == null) throw "AppSystemManager has not been initialized.";
+  //   return state;
+  // }
 
-  // Screens
-  var home = const DnDHome();
+  // late SparkApp app = SparkApp(
+  //     home: home,
+  //     title: "D&D App",
+  //     sysManagerKey: appManagerKey,
+  //     theme: baseTheme);
 
-  // Window props
-  Size initialSize = const Size(900, 600);
-  Size minimumSize = const Size(200, 200);
-  Alignment windowAlignment = Alignment.center;
-  String windowTitle = "D&D Character Editor";
+  SparkApp app;
+  WindowData windowData;
 
   // Widget tree is built here
   void run() {
     runApp(app.treeRoot);
     initializeBitsdojo(
-        initialSize: initialSize,
-        minSize: minimumSize,
-        alignment: windowAlignment,
-        title: windowTitle);
+        initialSize: windowData.initialSize,
+        minSize: windowData.minimumSize,
+        alignment: windowData.windowAlignment,
+        title: windowData.windowTitle);
   }
+}
+
+class WindowData {
+  Size initialSize = const Size(900, 600);
+  Size minimumSize = const Size(200, 200);
+  Alignment windowAlignment = Alignment.center;
+  String windowTitle = "D&D Character Editor";
 }
 
 /*

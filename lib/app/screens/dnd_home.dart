@@ -7,7 +7,8 @@ import 'package:spark_lib/notifications/notifications.dart';
 import '../../program.dart';
 
 class DnDHome extends StatefulWidget {
-  const DnDHome({Key? key}) : super(key: key);
+  DnDHome(this.windowData, {Key? key}) : super(key: key);
+  final WindowData windowData;
 
   @override
   _DnDHomeState createState() => _DnDHomeState();
@@ -28,7 +29,7 @@ class _DnDHomeState extends State<DnDHome> {
                 child: Text("Test"),
                 onPressed: () {
                   showSnackBar(context,
-                      message: "App name: " + program.windowTitle);
+                      message: "App name: " + widget.windowData.windowTitle);
                 },
               ),
             ],
