@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:spark_lib/custom_window/bitsdojo_boilerplate.dart';
-import 'package:spark_lib/app/app_system_manager.dart';
-import 'package:spark_lib/app/spark_app.dart';
-import 'package:spark_lib/navigation/spark_nav.dart';
+import 'package:spark_lib/spark_di.dart';
 
 import 'app/screens/dnd_home.dart';
 import 'app/theme/base_theme.dart';
@@ -17,6 +15,7 @@ class Program {
   // Widget tree is built here
   void run() {
     runApp(app.treeRoot);
+    // Why does this work?
     initializeBitsdojo(
         initialSize: windowData.initialSize,
         minSize: windowData.minimumSize,
