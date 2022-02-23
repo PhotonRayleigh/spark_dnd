@@ -10,7 +10,12 @@ import '../../data_manager/json_data_manager.dart';
 class PCSheetCubit extends Cubit<PCSheetState> {
   // Data manager can be abstracted in the future, probably
   // Not that I plan on having swappable data backends.
-  PCSheetCubit(JsonDataManager dataManager) : super(PCSheetState(PCData()));
+  PCSheetCubit() : super(PCSheetState(PCData()));
+
+  void setSheet(PCData pcData) {
+    var newState = PCSheetState(pcData);
+    emit(newState);
+  }
 }
 
 class PCSheetState {

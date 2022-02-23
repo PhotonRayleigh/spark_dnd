@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:spark_dnd/app/components/main_comp.dart';
+import 'package:spark_dnd/app/screens/pc_view.dart';
 import 'package:spark_lib/spark_di.dart';
 
 import 'data_module.dart';
@@ -14,20 +16,35 @@ class SparkDndModule {
     // Data backend module
     injector = DataModule().initialize(injector);
 
-    // Player Character Sheet mappings
-    injector.map<PCSheetCubit>((i) => PCSheetCubit(i.get<JsonDataManager>()),
-        isSingleton: true);
-
     // Program and application mappings
     injector.map<ThemeData>((i) => baseTheme);
     injector.map<WindowData>((i) => WindowData(), isSingleton: true);
 
     // Navigator definition
     injector.map<AppNavigator>((i) => AppNavigator(), isSingleton: true);
+
+    // Cubits
+    // injector.map<PCSheetCubit>((i) => PCSheetCubit(),
+    //     isSingleton: false);
+    injector.map<MainCompCubit>(
+        (i) => MainCompCubit(
+              i.get<AppNavigator>(),
+            ),
+        isSingleton: true);
+
     // App routes
     injector.map<DnDHome>(
-      (i) => DnDHome(i.get<WindowData>(), i.get<AppNavigator>()),
+      (i) => DnDHome(
+        i.get<WindowData>(),
+        i.get<AppNavigator>(),
+        i.get<MainCompCubit>(),
+        // i.get<PCSheetCubit>(),
+        // i.get<PCView>(),
+      ),
     );
+    // injector.map<PCView>(
+    //     (i) => PCView(i.get<AppNavigator>(), i.get<PCSheetCubit>()));
+    injector.map<PCViewFactory>((i) => PCView.factory);
 
     injector.map<GlobalKey<AppSystemManagerState>>(
       (i) => GlobalKey(debugLabel: "System Manager"),

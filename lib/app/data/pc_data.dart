@@ -1,6 +1,9 @@
 // Core data class for characters
 
 class PCData {
+  String name = "";
+  String charClass = "";
+
   set level(int level) => (level >= 0 && level <= 20)
       ? _level = level
       : throw "Levels must range from 0-20. Tried to assign level $level";
