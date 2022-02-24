@@ -31,12 +31,12 @@ class PCData {
   int get intMod => attributeModTable[_intScore] ?? 0;
 
   set wisScore(int v) => scoreCheck(v) ? _wisScore = v : _wisScore = _wisScore;
-  int get wisScore => _strScore;
+  int get wisScore => _wisScore;
   int _wisScore = 10;
   int get wisMod => attributeModTable[_wisScore] ?? 0;
 
   set chaScore(int v) => scoreCheck(v) ? _chaScore = v : _chaScore = _chaScore;
-  int get chaScore => _strScore;
+  int get chaScore => _chaScore;
   int _chaScore = 10;
   int get chaMod => attributeModTable[_chaScore] ?? 0;
 

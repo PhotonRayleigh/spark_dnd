@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:spark_dnd/app/components/pc_sheet.dart';
 import 'package:spark_dnd/app/widgets/attributes_table.dart';
 
 import 'package:spark_lib/spark_di.dart';
 
-typedef PCViewFactory = PCView
-    Function(AppNavigator navigator, PCSheetCubit pcSheet, {Key? key});
-
 class PCView extends StatelessWidget {
-  const PCView(this.navigator, this.pcSheet, {Key? key}) : super(key: key);
-  final AppNavigator navigator;
-  final PCSheetCubit pcSheet;
-
-  static PCView factory(AppNavigator navigator, PCSheetCubit pcSheet,
-      {Key? key}) {
-    return PCView(
-      navigator,
-      pcSheet,
-      key: key,
-    );
-  }
+  PCView(this.pcSheet, {Key? key}) : super(key: key);
+  final AppNavigator navigator = GetIt.I.get<AppNavigator>();
+  final PCSheet pcSheet;
 
   @override
   Widget build(BuildContext context) {
     return SparkPage(
       navigator: navigator,
       child: Scaffold(
-        appBar: WindowAppBar.build(context,
-            navigator: navigator, titleText: pcSheet.state.pcData.name),
+        appBar: WindowAppBar.build(context, titleText: pcSheet.data.name),
         body: Column(
           children: [
             AttributesTable(pcSheet),
+            ElevatedButton(
+              child: Text("Increment Strength"),
+              onPressed: () {
+                pcSheet.strScore++;
+                pcSheet.dexScore--;
+              },
+            ),
+            ElevatedButton(
+              child: Text("Print"),
+              onPressed: () {
+                pcSheet.strNotifier.printListeners();
+                pcSheet.dexNotifier.printListeners();
+              },
+            ),
           ],
         ),
       ),

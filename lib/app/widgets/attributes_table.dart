@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:spark_lib/events/notifier.dart';
 import 'package:spark_dnd/app/components/pc_sheet.dart';
 
 class AttributesTable extends StatelessWidget {
   AttributesTable(this.pcSheet);
 
-  final PCSheetCubit pcSheet;
+  final PCSheet pcSheet;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PCSheetCubit, PCSheetState>(
-      bloc: pcSheet,
-      builder: (context, state) {
+    return NotifierBuilder(
+      notifier: pcSheet,
+      builder: (context) {
         return Row(
           children: [
             Column(
@@ -22,46 +22,54 @@ class AttributesTable extends StatelessWidget {
                 Text("Modifier"),
               ],
             ),
-            Column(
-              children: [
-                Text("Strength"),
-                Text(state.pcData.strScore.toString()),
-                Text(state.pcData.strMod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Dexterity"),
-                Text(state.pcData.dexScore.toString()),
-                Text(state.pcData.dexMod.toString()),
-              ],
-            ),
+            NotifierBuilder(
+                notifier: pcSheet.strNotifier,
+                builder: (context) {
+                  return Column(
+                    children: [
+                      Text("Strength"),
+                      Text(pcSheet.data.strScore.toString()),
+                      Text(pcSheet.data.strMod.toString()),
+                    ],
+                  );
+                }),
+            NotifierBuilder(
+                notifier: pcSheet.dexNotifier,
+                builder: (context) {
+                  return Column(
+                    children: [
+                      Text("Dexterity"),
+                      Text(pcSheet.data.dexScore.toString()),
+                      Text(pcSheet.data.dexMod.toString()),
+                    ],
+                  );
+                }),
             Column(
               children: [
                 Text("Constitution"),
-                Text(state.pcData.conScore.toString()),
-                Text(state.pcData.conMod.toString()),
+                Text(pcSheet.data.conScore.toString()),
+                Text(pcSheet.data.conMod.toString()),
               ],
             ),
             Column(
               children: [
                 Text("Intelligence"),
-                Text(state.pcData.intScore.toString()),
-                Text(state.pcData.intMod.toString()),
+                Text(pcSheet.data.intScore.toString()),
+                Text(pcSheet.data.intMod.toString()),
               ],
             ),
             Column(
               children: [
                 Text("Wisdom"),
-                Text(state.pcData.wisScore.toString()),
-                Text(state.pcData.wisMod.toString()),
+                Text(pcSheet.data.wisScore.toString()),
+                Text(pcSheet.data.wisMod.toString()),
               ],
             ),
             Column(
               children: [
                 Text("Charisma"),
-                Text(state.pcData.chaScore.toString()),
-                Text(state.pcData.chaMod.toString()),
+                Text(pcSheet.data.chaScore.toString()),
+                Text(pcSheet.data.chaMod.toString()),
               ],
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:get_it/get_it.dart';
 import 'package:spark_dnd/app/components/main_comp.dart';
 import 'package:spark_dnd/app/screens/pc_view.dart';
 import 'package:spark_lib/spark_di.dart';
@@ -12,56 +12,47 @@ import '../app/components/pc_sheet.dart';
 import '../data_manager/json_data_manager.dart';
 
 class SparkDndModule {
-  Injector initialize(Injector injector) {
+  /// Registers Spark D&D classes in GetIt.
+  void initialize() {
     // Data backend module
-    injector = DataModule().initialize(injector);
+    DataModule().initialize();
 
     // Program and application mappings
-    injector.map<ThemeData>((i) => baseTheme);
-    injector.map<WindowData>((i) => WindowData(), isSingleton: true);
+    GetIt.I.registerSingleton<ThemeData>(baseTheme);
+    GetIt.I.registerSingleton<WindowData>(WindowData());
 
     // Navigator definition
-    injector.map<AppNavigator>((i) => AppNavigator(), isSingleton: true);
+    GetIt.I.registerSingleton<AppNavigator>(AppNavigator());
 
     // Cubits
-    // injector.map<PCSheetCubit>((i) => PCSheetCubit(),
-    //     isSingleton: false);
-    injector.map<MainCompCubit>(
-        (i) => MainCompCubit(
-              i.get<AppNavigator>(),
-            ),
-        isSingleton: true);
+    GetIt.I.registerSingleton<MainComponent>(MainComponent(
+      GetIt.I.get<AppNavigator>(),
+    ));
 
     // App routes
-    injector.map<DnDHome>(
-      (i) => DnDHome(
-        i.get<WindowData>(),
-        i.get<AppNavigator>(),
-        i.get<MainCompCubit>(),
+    GetIt.I.registerFactory<DnDHome>(
+      () => DnDHome(
+        GetIt.I.get<WindowData>(),
+        GetIt.I.get<AppNavigator>(),
+        GetIt.I.get<MainComponent>(),
         // i.get<PCSheetCubit>(),
         // i.get<PCView>(),
       ),
     );
-    // injector.map<PCView>(
-    //     (i) => PCView(i.get<AppNavigator>(), i.get<PCSheetCubit>()));
-    injector.map<PCViewFactory>((i) => PCView.factory);
 
-    injector.map<GlobalKey<AppSystemManagerState>>(
-      (i) => GlobalKey(debugLabel: "System Manager"),
-      isSingleton: true,
-    );
+    GetIt.I.registerSingleton<GlobalKey<AppSystemManagerState>>(
+        GlobalKey(debugLabel: "System Manager"));
 
-    injector = SparkDIModule().initialize(injector,
-        navigator: injector.get<AppNavigator>(),
-        home: injector.get<DnDHome>(),
-        theme: injector.get<ThemeData>(),
-        sysManagerKey: injector.get<GlobalKey<AppSystemManagerState>>(),
+    SparkDIModule().initialize(
+        navigator: GetIt.I.get<AppNavigator>(),
+        home: GetIt.I.get<DnDHome>(),
+        theme: GetIt.I.get<ThemeData>(),
+        sysManagerKey: GetIt.I.get<GlobalKey<AppSystemManagerState>>(),
         title: "D&D App");
 
-    injector.map<Program>(
-        (i) => Program(i.get<SparkApp>(), i.get<WindowData>()),
-        isSingleton: true);
+    GetIt.I.registerSingleton<Program>(
+        Program(GetIt.I.get<SparkApp>(), GetIt.I.get<WindowData>()));
 
-    return injector;
+    return;
   }
 }
