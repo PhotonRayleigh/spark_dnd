@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:spark_dnd/app/components/pc_sheet.dart';
+import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
 import 'package:spark_dnd/app/widgets/attributes_table.dart';
 
 import 'package:spark_lib/spark_di.dart';
@@ -8,7 +8,7 @@ import 'package:spark_lib/spark_di.dart';
 class PCView extends StatelessWidget {
   PCView(this.pcSheet, {Key? key}) : super(key: key);
   final AppNavigator navigator = GetIt.I.get<AppNavigator>();
-  final PCSheet pcSheet;
+  final PCSheetLC pcSheet;
 
   @override
   Widget build(BuildContext context) {

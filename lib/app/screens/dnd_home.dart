@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spark_dnd/app/components/main_comp.dart';
-import 'package:spark_dnd/app/components/pc_sheet.dart';
+import 'package:spark_dnd/app/components/main_lc.dart';
+import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
 import 'package:spark_dnd/app/screens/pc_view.dart';
 
 import 'package:spark_lib/events/notifier.dart';
@@ -14,7 +14,7 @@ class DnDHome extends StatefulWidget {
       : super(key: key);
   final WindowData windowData;
   final AppNavigator navigator;
-  final MainComponent mainComp;
+  final MainLC mainComp;
   // final PCView pcView;
 
   @override

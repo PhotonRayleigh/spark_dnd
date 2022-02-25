@@ -1,13 +1,13 @@
-import 'package:spark_dnd/app/components/pc_sheet.dart';
+import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
 import 'package:spark_dnd/app/data/pc_data.dart';
 import 'package:spark_lib/events/notifier.dart';
 
 import 'package:spark_lib/spark_di.dart';
 
-class MainComponent with Notifier {
+class MainLC with Notifier {
   // Upon initialization, need to load the available
   // character sheets so they can be displayed
-  MainComponent(this.navigator);
+  MainLC(this.navigator);
   // PCSheetCubit pcSheet;
   final AppNavigator navigator;
   final MainCompState state = MainCompState();
@@ -19,8 +19,8 @@ class MainComponent with Notifier {
     notify();
   }
 
-  PCSheet loadSheet(PCData sheet) {
-    PCSheet cubit = PCSheet();
+  PCSheetLC loadSheet(PCData sheet) {
+    PCSheetLC cubit = PCSheetLC();
     cubit.setSheet(sheet);
     return cubit;
   }

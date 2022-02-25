@@ -11,10 +11,10 @@ import '../../data_manager/json_data_manager.dart';
 // It should be able to function even if Flutter was replaced.
 // All blocs should be initialized in DI and provided to the UI.
 
-class PCSheet with Notifier {
+class PCSheetLC with Notifier {
   // Data manager can be abstracted in the future, probably
   // Not that I plan on having swappable data backends.
-  PCSheet();
+  PCSheetLC();
   PCData _data = PCData();
   PCData get data => _data;
   set data(PCData pcData) {

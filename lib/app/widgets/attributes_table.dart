@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:spark_lib/events/notifier.dart';
-import 'package:spark_dnd/app/components/pc_sheet.dart';
+import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
 
 class AttributesTable extends StatelessWidget {
   AttributesTable(this.pcSheet);
 
-  final PCSheet pcSheet;
+  final PCSheetLC pcSheet;
 
   @override
   Widget build(BuildContext context) {
