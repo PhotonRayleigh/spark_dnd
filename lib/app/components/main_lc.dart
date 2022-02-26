@@ -30,7 +30,7 @@ class MainCompState {
   List<PCData> sheets = [
     PCData()
       ..name = "Rayleigh"
-      ..charisma.score = 13,
+      ..attributes[Attributes.charisma.index].score = 13,
     PCData()..name = "Spark",
     PCData()..name = "Sunstrider",
     PCData()..name = "Jard",

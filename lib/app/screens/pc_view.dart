@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
+import 'package:spark_dnd/app/data/pc_data.dart';
 import 'package:spark_dnd/app/widgets/attributes_table.dart';
 
 import 'package:spark_lib/spark_di.dart';

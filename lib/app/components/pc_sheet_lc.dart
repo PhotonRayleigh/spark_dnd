@@ -24,9 +24,9 @@ class PCSheetLC with StreamNotifier<PCData> {
 
   Map<Attribute, Notifier> attributeNotifierMap = {};
 
-  void updateAttribute(Attribute data, int score) {
-    data.score = score;
-    notify(this.data);
+  void updateAttribute(Attribute attribute, int score) {
+    attribute.score = score;
+    notify(data);
   }
 }
 

@@ -12,12 +12,22 @@ class PCData {
   int get level => _level;
   int _level = 1;
 
-  Attribute strength = Attribute("Strength", score: 10);
-  Attribute dexterity = Attribute("Dexterity", score: 10);
-  Attribute constitution = Attribute("Constitution", score: 10);
-  Attribute wisdom = Attribute("Wisdom", score: 10);
-  Attribute intelligence = Attribute("Intelligence", score: 10);
-  Attribute charisma = Attribute("Charisma", score: 10);
+  Attribute getAttribute(Attributes att) => attributes[att.index];
+  Attribute get strength => getAttribute(Attributes.strength);
+  Attribute get dexterity => getAttribute(Attributes.dexterity);
+  Attribute get constitution => getAttribute(Attributes.constitution);
+  Attribute get intelligence => getAttribute(Attributes.intelligence);
+  Attribute get wisdom => getAttribute(Attributes.wisdom);
+  Attribute get charisma => getAttribute(Attributes.charisma);
+
+  List<Attribute> attributes = [
+    Attribute("Strength", score: 10),
+    Attribute("Dexterity", score: 10),
+    Attribute("Constitution", score: 10),
+    Attribute("Intelligence", score: 10),
+    Attribute("Wisdom", score: 10),
+    Attribute("Charisma", score: 10),
+  ];
 
   int get proficiency {
     if (level == 0) {
@@ -65,6 +75,19 @@ class PCData {
 
   List<Skill> skillList = [];
 
+  int skillMod(Skill skill) {
+    int att = attributes[skill.attribute.index].mod;
+    switch (skill.proficiency) {
+      case (ProficiencyLevel.none):
+        return att;
+      case (ProficiencyLevel.proficient):
+        return att + proficiency;
+      case (ProficiencyLevel.expertise):
+        return att + proficiency * 2;
+    }
+    return 0;
+  }
+
   PCData() {
     // Initialize to default skills if made fresh, otherwise use saved.
     skillList = List.of(_defaultSkillList);
@@ -80,32 +103,55 @@ enum Attributes {
   charisma
 }
 
-enum ProficiencyLevel { none, proficient, expertise }
-
-class Skill {
-  String name = "";
-  Attributes attribute = Attributes.strength;
-  ProficiencyLevel proficiency = ProficiencyLevel.none;
-
-  Skill(this.name, this.attribute, this.proficiency);
+enum Skills {
+  acrobatics,
+  animalHandling,
+  arcana,
+  athletics,
+  deception,
+  history,
+  insight,
+  intimidation,
+  investigation,
+  medicine,
+  nature,
+  perception,
+  performance,
+  persuasion,
+  religion,
+  sleightOfHand,
+  stealth,
+  survival,
 }
 
-class Attribute {
+enum ProficiencyLevel { none, proficient, expertise }
+
+class Skill with StreamNotifier<Skill> {
+  final String name;
+  final Attributes attribute;
+  ProficiencyLevel _proficiency = ProficiencyLevel.none;
+  ProficiencyLevel get proficiency => _proficiency;
+  set proficiency(ProficiencyLevel prof) {
+    _proficiency = prof;
+    notify(this);
+  }
+
+  Skill(this.name, this.attribute, this._proficiency);
+}
+
+class Attribute with StreamNotifier<Attribute> {
   Attribute(this.name, {int score = 10}) {
     this.score = score;
   }
-  String name = "";
+  final String name;
   int _score = 10;
   int get score => _score;
   set score(int value) {
-    _score = scoreCheck(value) ? value : _score;
+    _score = (value >= 0 && value <= 25) ? value : _score;
+    notify(this);
   }
 
   get mod => attributeModTable[_score];
-
-  scoreCheck(int value) {
-    return value >= 0 && value <= 25;
-  }
 
   static const Map<int, int> attributeModTable = {
     0: -5,

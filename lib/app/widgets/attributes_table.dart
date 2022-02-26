@@ -26,48 +26,14 @@ class AttributesTable extends StatelessWidget {
                 Text("Modifier"),
               ],
             ),
-            Column(
-              children: [
-                Text("Strength"),
-                Text(data.strength.score.toString()),
-                Text(data.strength.mod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Dexterity"),
-                Text(data.dexterity.score.toString()),
-                Text(data.dexterity.mod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Constitution"),
-                Text(data.constitution.score.toString()),
-                Text(data.constitution.mod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Intelligence"),
-                Text(data.intelligence.score.toString()),
-                Text(data.intelligence.mod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Wisdom"),
-                Text(data.wisdom.score.toString()),
-                Text(data.wisdom.mod.toString()),
-              ],
-            ),
-            Column(
-              children: [
-                Text("Charisma"),
-                Text(data.charisma.score.toString()),
-                Text(data.charisma.mod.toString()),
-              ],
-            ),
+            for (Attribute att in data.attributes)
+              Column(
+                children: [
+                  Text(att.name),
+                  Text(att.score.toString()),
+                  Text(att.mod.toString()),
+                ],
+              ),
           ],
         );
       },
