@@ -21,7 +21,7 @@ class MainLC with Notifier {
 
   PCSheetLC loadSheet(PCData sheet) {
     PCSheetLC cubit = PCSheetLC();
-    cubit.setSheet(sheet);
+    cubit.data = sheet;
     return cubit;
   }
 }
@@ -30,7 +30,7 @@ class MainCompState {
   List<PCData> sheets = [
     PCData()
       ..name = "Rayleigh"
-      ..chaScore = 13,
+      ..charisma.score = 13,
     PCData()..name = "Spark",
     PCData()..name = "Sunstrider",
     PCData()..name = "Jard",

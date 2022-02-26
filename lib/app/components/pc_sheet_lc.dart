@@ -11,7 +11,7 @@ import '../../data_manager/json_data_manager.dart';
 // It should be able to function even if Flutter was replaced.
 // All blocs should be initialized in DI and provided to the UI.
 
-class PCSheetLC with Notifier {
+class PCSheetLC with StreamNotifier<PCData> {
   // Data manager can be abstracted in the future, probably
   // Not that I plan on having swappable data backends.
   PCSheetLC();
@@ -19,27 +19,14 @@ class PCSheetLC with Notifier {
   PCData get data => _data;
   set data(PCData pcData) {
     _data = pcData;
-    notify();
+    notify(data);
   }
 
-  int get strScore => data.strScore;
-  set strScore(int val) {
-    data.strScore = val;
-    strNotifier.notify();
-  }
+  Map<Attribute, Notifier> attributeNotifierMap = {};
 
-  int get dexScore => data.dexScore;
-  set dexScore(int val) {
-    data.dexScore = val;
-    dexNotifier.notify();
-  }
-
-  Notifier strNotifier = Notifier();
-  Notifier dexNotifier = Notifier();
-
-  void setSheet(PCData pcData) {
-    data = pcData;
-    notify();
+  void updateAttribute(Attribute data, int score) {
+    data.score = score;
+    notify(this.data);
   }
 }
 

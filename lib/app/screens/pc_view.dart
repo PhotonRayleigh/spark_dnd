@@ -22,15 +22,10 @@ class PCView extends StatelessWidget {
             ElevatedButton(
               child: Text("Increment Strength"),
               onPressed: () {
-                pcSheet.strScore++;
-                pcSheet.dexScore--;
-              },
-            ),
-            ElevatedButton(
-              child: Text("Print"),
-              onPressed: () {
-                pcSheet.strNotifier.printListeners();
-                pcSheet.dexNotifier.printListeners();
+                pcSheet.updateAttribute(
+                    pcSheet.data.strength, pcSheet.data.strength.score + 1);
+                pcSheet.updateAttribute(
+                    pcSheet.data.dexterity, pcSheet.data.dexterity.score - 1);
               },
             ),
           ],
