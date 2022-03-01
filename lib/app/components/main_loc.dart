@@ -1,13 +1,13 @@
-import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
+import 'package:spark_dnd/app/components/pc_sheet_loc.dart';
 import 'package:spark_dnd/app/data/pc_data.dart';
 import 'package:spark_lib/events/notifier.dart';
 
 import 'package:spark_lib/spark_di.dart';
 
-class MainLC with Notifier {
+class MainLoC with StreamNotifier<void> {
   // Upon initialization, need to load the available
   // character sheets so they can be displayed
-  MainLC(this.navigator);
+  MainLoC(this.navigator);
   // PCSheetCubit pcSheet;
   final AppNavigator navigator;
   final MainCompState state = MainCompState();
@@ -16,7 +16,7 @@ class MainLC with Notifier {
     throw UnimplementedError("findCharacters is not implemented.");
     List<PCData> newSheetList = [];
 
-    notify();
+    notify(null);
   }
 
   PCSheetLC loadSheet(PCData sheet) {
@@ -30,7 +30,7 @@ class MainCompState {
   List<PCData> sheets = [
     PCData()
       ..name = "Rayleigh"
-      ..attributes[Attributes.charisma.index].score = 13,
+      ..charisma.score = 13,
     PCData()..name = "Spark",
     PCData()..name = "Sunstrider",
     PCData()..name = "Jard",

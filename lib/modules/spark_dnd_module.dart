@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:spark_dnd/app/components/main_lc.dart';
+import 'package:spark_dnd/app/components/main_loc.dart';
 import 'package:spark_dnd/app/screens/pc_view.dart';
+import 'package:spark_lib/filesystem/file_paths.dart';
 import 'package:spark_lib/spark_di.dart';
 
 import 'data_module.dart';
 import '../program.dart';
 import 'package:spark_dnd/app/screens/dnd_home.dart';
 import 'package:spark_dnd/app/theme/base_theme.dart';
-import '../app/components/pc_sheet_lc.dart';
+import '../app/components/pc_sheet_loc.dart';
 import '../data_manager/json_data_manager.dart';
 
 class SparkDndModule {
   /// Registers Spark D&D classes in GetIt.
   void initialize() {
+    GetIt.I.registerSingleton<SystemPaths>(SystemPaths.platform());
     // Data backend module
     DataModule().initialize();
 
@@ -25,7 +27,7 @@ class SparkDndModule {
     GetIt.I.registerSingleton<AppNavigator>(AppNavigator());
 
     // Cubits
-    GetIt.I.registerSingleton<MainLC>(MainLC(
+    GetIt.I.registerSingleton<MainLoC>(MainLoC(
       GetIt.I.get<AppNavigator>(),
     ));
 
@@ -34,7 +36,7 @@ class SparkDndModule {
       () => DnDHome(
         GetIt.I.get<WindowData>(),
         GetIt.I.get<AppNavigator>(),
-        GetIt.I.get<MainLC>(),
+        GetIt.I.get<MainLoC>(),
         // i.get<PCSheetCubit>(),
         // i.get<PCView>(),
       ),

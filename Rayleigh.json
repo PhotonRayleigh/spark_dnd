@@ -1,0 +1,86 @@
+{
+    "attributes": {
+        "Strength": 10,
+        "Dexterity": 10,
+        "Constitution": 10,
+        "Intelligence": 10,
+        "Wisdom": 10,
+        "Charisma": 13
+    },
+    "skills": {
+        "Acrobatics": {
+            "attribute": "dexterity",
+            "proficiency": "none"
+        },
+        "Animal Handling": {
+            "attribute": "wisdom",
+            "proficiency": "none"
+        },
+        "Arcana": {
+            "attribute": "intelligence",
+            "proficiency": "none"
+        },
+        "Athletics": {
+            "attribute": "strength",
+            "proficiency": "none"
+        },
+        "Deception": {
+            "attribute": "charisma",
+            "proficiency": "none"
+        },
+        "History": {
+            "attribute": "intelligence",
+            "proficiency": "none"
+        },
+        "Insight": {
+            "attribute": "wisdom",
+            "proficiency": "none"
+        },
+        "Intimidation": {
+            "attribute": "charisma",
+            "proficiency": "none"
+        },
+        "Investigation": {
+            "attribute": "intelligence",
+            "proficiency": "none"
+        },
+        "Medicine": {
+            "attribute": "wisdom",
+            "proficiency": "none"
+        },
+        "Nature": {
+            "attribute": "intelligence",
+            "proficiency": "none"
+        },
+        "Perception": {
+            "attribute": "wisdom",
+            "proficiency": "none"
+        },
+        "Performance": {
+            "attribute": "charisma",
+            "proficiency": "none"
+        },
+        "Persuasion": {
+            "attribute": "charisma",
+            "proficiency": "none"
+        },
+        "Religion": {
+            "attribute": "intelligence",
+            "proficiency": "none"
+        },
+        "Sleight of Hand": {
+            "attribute": "dexterity",
+            "proficiency": "none"
+        },
+        "Stealth": {
+            "attribute": "dexterity",
+            "proficiency": "none"
+        },
+        "Survival": {
+            "attribute": "wisdom",
+            "proficiency": "none"
+        }
+    },
+    "name": "Rayleigh",
+    "level": 1
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:spark_lib/events/notifier.dart';
-import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
+import 'package:spark_dnd/app/components/pc_sheet_loc.dart';
 
 import '../data/pc_data.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spark_dnd/app/components/main_lc.dart';
-import 'package:spark_dnd/app/components/pc_sheet_lc.dart';
+import 'package:spark_dnd/app/components/main_loc.dart';
+import 'package:spark_dnd/app/components/pc_sheet_loc.dart';
 import 'package:spark_dnd/app/screens/pc_view.dart';
 
 import 'package:spark_lib/events/notifier.dart';
@@ -14,7 +14,7 @@ class DnDHome extends StatefulWidget {
       : super(key: key);
   final WindowData windowData;
   final AppNavigator navigator;
-  final MainLC mainComp;
+  final MainLoC mainComp;
   // final PCView pcView;
 
   @override
@@ -38,9 +38,9 @@ class _DnDHomeState extends State<DnDHome> {
         drawer: drawer,
         body: Column(
           children: [
-            NotifierBuilder(
-              notifier: widget.mainComp,
-              builder: (context) => ListView(
+            StreamBuilder(
+              stream: widget.mainComp.stream,
+              builder: (context, _) => ListView(
                 shrinkWrap: true,
                 children: [
                   for (var item in widget.mainComp.state.sheets)

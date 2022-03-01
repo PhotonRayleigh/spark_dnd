@@ -1,5 +1,5 @@
 // Core data class for characters
-
+import 'package:spark_lib/extensions.dart';
 import 'package:spark_lib/events/notifier.dart';
 
 class PCData {
@@ -12,13 +12,13 @@ class PCData {
   int get level => _level;
   int _level = 1;
 
-  Attribute getAttribute(Attributes att) => attributes[att.index];
-  Attribute get strength => getAttribute(Attributes.strength);
-  Attribute get dexterity => getAttribute(Attributes.dexterity);
-  Attribute get constitution => getAttribute(Attributes.constitution);
-  Attribute get intelligence => getAttribute(Attributes.intelligence);
-  Attribute get wisdom => getAttribute(Attributes.wisdom);
-  Attribute get charisma => getAttribute(Attributes.charisma);
+  Attribute getAttribute(String att) => attributes[liveAttributesMap[att]!];
+  Attribute get strength => getAttribute("Strength");
+  Attribute get dexterity => getAttribute("Dexterity");
+  Attribute get constitution => getAttribute("Constitution");
+  Attribute get intelligence => getAttribute("Intelligence");
+  Attribute get wisdom => getAttribute("Wisdom");
+  Attribute get charisma => getAttribute("Charisma");
 
   List<Attribute> attributes = [
     Attribute("Strength", score: 10),
@@ -48,35 +48,35 @@ class PCData {
   }
 
   static final _defaultSkillList = [
-    Skill("Acrobatics", Attributes.dexterity, ProficiencyLevel.none),
-    Skill("Animal Handling", Attributes.wisdom, ProficiencyLevel.none),
-    Skill("Arcana", Attributes.intelligence, ProficiencyLevel.none),
-    Skill("Athletics", Attributes.strength, ProficiencyLevel.none),
-    Skill("Deception", Attributes.charisma, ProficiencyLevel.none),
-    Skill("History", Attributes.intelligence, ProficiencyLevel.none),
-    Skill("Insight", Attributes.wisdom, ProficiencyLevel.none),
+    Skill("Acrobatics", "Dexterity", ProficiencyLevel.none),
+    Skill("Animal Handling", "Wisdom", ProficiencyLevel.none),
+    Skill("Arcana", "Intelligence", ProficiencyLevel.none),
+    Skill("Athletics", "Strength", ProficiencyLevel.none),
+    Skill("Deception", "Charisma", ProficiencyLevel.none),
+    Skill("History", "Intelligence", ProficiencyLevel.none),
+    Skill("Insight", "Wisdom", ProficiencyLevel.none),
     Skill(
         "Intimidation",
-        Attributes.charisma,
+        "Charisma",
         ProficiencyLevel
             .none), // Can be used with Strength as well, will need to account
-    Skill("Investigation", Attributes.intelligence, ProficiencyLevel.none),
-    Skill("Medicine", Attributes.wisdom, ProficiencyLevel.none),
-    Skill("Nature", Attributes.intelligence, ProficiencyLevel.none),
-    Skill("Perception", Attributes.wisdom, ProficiencyLevel.none),
-    Skill("Performance", Attributes.charisma, ProficiencyLevel.none),
-    Skill("Persuasion", Attributes.charisma, ProficiencyLevel.none),
-    Skill("Religion", Attributes.intelligence, ProficiencyLevel.none),
-    Skill("Sleight of Hand", Attributes.dexterity, ProficiencyLevel.none),
-    Skill("Stealth", Attributes.dexterity, ProficiencyLevel.none),
-    Skill("Survival", Attributes.wisdom, ProficiencyLevel.none),
+    Skill("Investigation", "Intelligence", ProficiencyLevel.none),
+    Skill("Medicine", "Wisdom", ProficiencyLevel.none),
+    Skill("Nature", "Intelligence", ProficiencyLevel.none),
+    Skill("Perception", "Wisdom", ProficiencyLevel.none),
+    Skill("Performance", "Charisma", ProficiencyLevel.none),
+    Skill("Persuasion", "Charisma", ProficiencyLevel.none),
+    Skill("Religion", "Intelligence", ProficiencyLevel.none),
+    Skill("Sleight of Hand", "Dexterity", ProficiencyLevel.none),
+    Skill("Stealth", "Dexterity", ProficiencyLevel.none),
+    Skill("Survival", "Wisdom", ProficiencyLevel.none),
     // Custom skills may be appended in the live skillList
   ];
 
-  List<Skill> skillList = [];
+  List<Skill> skills = [];
 
   int skillMod(Skill skill) {
-    int att = attributes[skill.attribute.index].mod;
+    int att = attributes[liveAttributesMap[skill.attribute]!].mod;
     switch (skill.proficiency) {
       case (ProficiencyLevel.none):
         return att;
@@ -90,45 +90,83 @@ class PCData {
 
   PCData() {
     // Initialize to default skills if made fresh, otherwise use saved.
-    skillList = List.of(_defaultSkillList);
+    skills = List.of(_defaultSkillList);
   }
+
+  Map<String, int> liveAttributesMap = Map.of(defaultAttributesMap);
+  Map<String, int> liveSkillsMap = Map.of(defaultSkillsMap);
+
+  static const Map<String, int> defaultAttributesMap = {
+    "Strength": 0,
+    "Dexterity": 1,
+    "Constitution": 2,
+    "Intelligence": 3,
+    "Wisdom": 4,
+    "Charisma": 5,
+  };
+
+  static const Map<String, int> defaultSkillsMap = {
+    "Acrobatics": 0,
+    "Animal Handling": 1,
+    "Arcana": 2,
+    "Athletics": 3,
+    "Deception": 4,
+    "History": 5,
+    "Insight": 6,
+    "Intimidation": 7,
+    "Investigation": 8,
+    "Medicine": 9,
+    "Nature": 10,
+    "Perception": 11,
+    "Performance": 12,
+    "Persuasion": 13,
+    "Religion": 14,
+    "Sleight of Hand": 15,
+    "Stealth": 16,
+    "Survival": 17,
+  };
+
+  static const PCDataJsonMapper json = PCDataJsonMapper._internal();
 }
 
-enum Attributes {
-  strength,
-  dexterity,
-  constitution,
-  intelligence,
-  wisdom,
-  charisma
-}
+class PCDataJsonMapper extends JsonMapper<PCData> {
+  // Field names, represented as strings.
+  static const String name = "name";
+  static const String level = "level";
+  static const String attributes = "attributes";
+  static const String skills = "skills";
 
-enum Skills {
-  acrobatics,
-  animalHandling,
-  arcana,
-  athletics,
-  deception,
-  history,
-  insight,
-  intimidation,
-  investigation,
-  medicine,
-  nature,
-  perception,
-  performance,
-  persuasion,
-  religion,
-  sleightOfHand,
-  stealth,
-  survival,
+  const PCDataJsonMapper._internal();
+  @override
+  JsonMap toJsonMap(PCData obj) => {
+        name: obj.name,
+        level: obj.level,
+        attributes: [
+          for (Attribute att in obj.attributes) Attribute.json.toJsonMap(att),
+        ],
+        skills: [
+          for (Skill skill in obj.skills) Skill.json.toJsonMap(skill),
+        ],
+      };
+  @override
+  PCData fromJsonMap(JsonMap map) => PCData()
+    ..name = map.asString(name)!
+    ..level = map.asInt(level)!
+    ..attributes = [
+      for (JsonMap jAtt in map.asJsonList(attributes)!)
+        Attribute.json.fromJsonMap(jAtt),
+    ]
+    ..skills = [
+      for (JsonMap jSkill in map.asJsonList(skills)!)
+        Skill.json.fromJsonMap(jSkill)
+    ];
 }
 
 enum ProficiencyLevel { none, proficient, expertise }
 
 class Skill with StreamNotifier<Skill> {
   final String name;
-  final Attributes attribute;
+  final String attribute;
   ProficiencyLevel _proficiency = ProficiencyLevel.none;
   ProficiencyLevel get proficiency => _proficiency;
   set proficiency(ProficiencyLevel prof) {
@@ -137,12 +175,32 @@ class Skill with StreamNotifier<Skill> {
   }
 
   Skill(this.name, this.attribute, this._proficiency);
+
+  static const SkillJsonMapper json = SkillJsonMapper._internal();
+}
+
+class SkillJsonMapper extends JsonMapper<Skill> {
+  // Field names, represented as strings.
+  static const String name = "name";
+  static const String attribute = "attribute";
+  static const String proficiency = "proficiency";
+
+  const SkillJsonMapper._internal();
+  @override
+  JsonMap toJsonMap(Skill obj) => {
+        name: obj.name,
+        attribute: obj.attribute,
+        proficiency: obj.proficiency.index,
+      };
+
+  @override
+  Skill fromJsonMap(JsonMap map) => Skill(
+      map.asString(name)!,
+      map.asString(attribute)!,
+      ProficiencyLevel.values[map.asInt(proficiency)!]);
 }
 
 class Attribute with StreamNotifier<Attribute> {
-  Attribute(this.name, {int score = 10}) {
-    this.score = score;
-  }
   final String name;
   int _score = 10;
   int get score => _score;
@@ -151,7 +209,13 @@ class Attribute with StreamNotifier<Attribute> {
     notify(this);
   }
 
+  Attribute(this.name, {int score = 10}) {
+    this.score = score;
+  }
+
   get mod => attributeModTable[_score];
+
+  static const AttributeJsonMapper json = AttributeJsonMapper._internal();
 
   static const Map<int, int> attributeModTable = {
     0: -5,
@@ -181,4 +245,23 @@ class Attribute with StreamNotifier<Attribute> {
     24: 7,
     25: 7,
   };
+}
+
+class AttributeJsonMapper extends JsonMapper<Attribute> {
+  // Field names represented as strings.
+  static const name = "name";
+  static const score = "score";
+
+  const AttributeJsonMapper._internal();
+  @override
+  Attribute fromJsonMap(JsonMap map) => Attribute(
+        map.asString(name)!,
+        score: map.asInt(score)!,
+      );
+
+  @override
+  JsonMap toJsonMap(Attribute obj) => {
+        name: obj.name,
+        score: obj.score,
+      };
 }
