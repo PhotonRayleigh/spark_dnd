@@ -7,8 +7,6 @@ import 'package:spark_lib/events/notifier.dart';
 import 'package:spark_lib/spark_di.dart';
 import 'package:spark_lib/notifications/notifications.dart';
 
-import '../../program.dart';
-
 class DnDHome extends StatefulWidget {
   DnDHome(this.windowData, this.navigator, this.mainComp, {Key? key})
       : super(key: key);

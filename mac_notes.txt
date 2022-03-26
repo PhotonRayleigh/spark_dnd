@@ -1,0 +1,7 @@
+So, to get BitsDojoWindow to build via CocoaPods on MacOS,
+I needed to run `arch -x86_64 sudo gem install ffi`.
+I tried it before with the arch and sudo commands reversed and it didn't work.
+
+There may be more to it, but idk. Some posts said something about
+linking against libc++ in Xcode, but it seemed that Flutter
+overrode my changes every time I run it.

@@ -6,7 +6,6 @@ import 'package:spark_lib/filesystem/file_paths.dart';
 import 'package:spark_lib/spark_di.dart';
 
 import 'data_module.dart';
-import '../program.dart';
 import 'package:spark_dnd/app/screens/dnd_home.dart';
 import 'package:spark_dnd/app/theme/base_theme.dart';
 import '../app/components/pc_sheet_loc.dart';
@@ -15,13 +14,12 @@ import '../data_manager/json_data_manager.dart';
 class SparkDndModule {
   /// Registers Spark D&D classes in GetIt.
   void initialize() {
-    GetIt.I.registerSingleton<SystemPaths>(SystemPaths.platform());
     // Data backend module
     DataModule().initialize();
 
     // Program and application mappings
     GetIt.I.registerSingleton<ThemeData>(baseTheme);
-    GetIt.I.registerSingleton<WindowData>(WindowData());
+    GetIt.I.registerSingleton<WindowData>(WindowData(windowTitle: "Spark D&D"));
 
     // Navigator definition
     GetIt.I.registerSingleton<AppNavigator>(AppNavigator());
@@ -50,10 +48,8 @@ class SparkDndModule {
         home: GetIt.I.get<DnDHome>(),
         theme: GetIt.I.get<ThemeData>(),
         sysManagerKey: GetIt.I.get<GlobalKey<AppSystemManagerState>>(),
+        windowData: GetIt.I.get<WindowData>(),
         title: "D&D App");
-
-    GetIt.I.registerSingleton<Program>(
-        Program(GetIt.I.get<SparkApp>(), GetIt.I.get<WindowData>()));
 
     return;
   }
