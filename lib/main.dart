@@ -19,9 +19,9 @@ void main() async {
   // directory.
   printPaths(SystemPaths.I);
   FileSystemManager.I.config("D&D App", "Spark Framework");
-  var app = SparkApp(
-      home: DnDHome(WindowData(windowTitle: "Spark D&D"), AppNavigator.I,
-          MainComp(AppNavigator.I, FileSystemManager.I)),
-      theme: darkTheme());
-  app.run();
+  SparkApp(
+          home: DnDHome(WindowData(windowTitle: "Spark D&D"), AppNavigator.I,
+              MainComp(AppNavigator.I, FileSystemManager.I)),
+          theme: darkTheme())
+      .run();
 }
