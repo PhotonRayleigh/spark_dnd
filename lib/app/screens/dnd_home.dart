@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:spark_dnd/app/components/main_loc.dart';
-import 'package:spark_dnd/app/components/pc_sheet_loc.dart';
+import 'package:spark_dnd/app/components/main_comp.dart';
+import 'package:spark_dnd/app/components/pc_sheet_comp.dart';
 import 'package:spark_dnd/app/screens/pc_view.dart';
+import 'package:spark_lib/custom_window/window_appbar.dart';
+import 'package:spark_lib/custom_window/window_data.dart';
 
 import 'package:spark_lib/events/notifier.dart';
-import 'package:spark_lib/spark_di.dart';
+import 'package:spark_lib/navigation/spark_nav.dart';
 import 'package:spark_lib/notifications/notifications.dart';
+import 'package:spark_lib/filesystem/filesystem_manager.dart';
 
 class DnDHome extends StatefulWidget {
   DnDHome(this.windowData, this.navigator, this.mainComp, {Key? key})
       : super(key: key);
   final WindowData windowData;
   final AppNavigator navigator;
-  final MainLoC mainComp;
+  final MainComp mainComp;
   // final PCView pcView;
 
   @override
@@ -20,11 +23,15 @@ class DnDHome extends StatefulWidget {
 }
 
 class _DnDHomeState extends State<DnDHome> {
+  late FileSystemManager fsManager;
+  String dirText = "";
   @override
   void initState() {
     super.initState();
     // Use mainComp to fetch list of character sheets
     // then display them.
+
+    fsManager = FileSystemManager.I;
   }
 
   @override
@@ -54,6 +61,16 @@ class _DnDHomeState extends State<DnDHome> {
               ),
             ),
             ElevatedButton(onPressed: () {}, child: Text("New")),
+            ElevatedButton(
+              child: Text("Get Directory"),
+              onPressed: () async {
+                var path = await fsManager.getUserPickDirectory();
+                setState(() {
+                  dirText = path ?? "null";
+                });
+              },
+            ),
+            Text(dirText),
           ],
         ),
       ),

@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'dart:collection';
 import 'dart:convert';
-import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
-import 'package:spark_lib/filesystem/file_paths.dart';
+import 'package:spark_lib/filesystem/system_paths.dart';
 import 'package:spark_lib/extensions.dart';
 
 import '../app/data/pc_data.dart';
 
 class JsonDataManager {
-  late SystemPaths systemPaths = GetIt.I.get<SystemPaths>();
+  SystemPaths systemPaths = SystemPaths.I;
 
   Future<void> saveJsonCharacterFile(String jsonString, String fileName) async {
     await systemPaths.ready;

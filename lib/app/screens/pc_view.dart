@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:spark_dnd/app/components/pc_sheet_loc.dart';
+import 'package:spark_dnd/app/components/pc_sheet_comp.dart';
 import 'package:spark_dnd/app/data/pc_data.dart';
 import 'package:spark_dnd/app/widgets/attributes_table.dart';
 
 import 'package:spark_dnd/data_manager/json_data_manager.dart';
-import 'package:spark_lib/spark_di.dart';
-import 'package:spark_lib/filesystem/file_paths.dart';
+import 'package:spark_lib/custom_window/window_appbar.dart';
+import 'package:spark_lib/filesystem/system_paths.dart';
+import 'package:spark_lib/navigation/spark_nav.dart';
 
 class PCView extends StatelessWidget {
   PCView(this.pcSheet, {Key? key}) : super(key: key);
-  final AppNavigator navigator = GetIt.I.get<AppNavigator>();
-  final PCSheetLC pcSheet;
-  late final JsonDataManager jsonManager = GetIt.I.get<JsonDataManager>();
+  final AppNavigator navigator = AppNavigator.I;
+  final PCSheetComp pcSheet;
+  late final JsonDataManager jsonManager = JsonDataManager();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class PCView extends StatelessWidget {
                 child: Text("Save to Json")),
             ElevatedButton(
                 onPressed: () {
-                  print(systemPaths.applicationStorage);
+                  print(SystemPaths.I.applicationStorage);
                 },
                 child: Text("Debug Print")),
           ],
